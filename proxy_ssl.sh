@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ./proxy.sh
 
 docker run -d \

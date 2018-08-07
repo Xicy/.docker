@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 docker network create -d bridge nginx-net
 
 docker run -d -p 80:80 -p 443:443 \

@@ -157,6 +157,7 @@ services:
         - "localserver:${LocalServer}"
       environment:
         - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+        - TZ=Europe/Istanbul
       depends_on:
         - workspace
       networks:

@@ -20,8 +20,10 @@ RUN apk --update add wget \
   autoconf \
   cyrus-sasl-dev \
   libgsasl-dev \
-  supervisor
+  supervisor \
+  tzdata
 
+RUN cp /usr/share/zoneinfo/Europe/Istanbul /etc/localtime && echo "Europe/Istanbul" >  /etc/timezone && apk del tzdata
 RUN docker-php-ext-install mysqli mbstring pdo pdo_mysql tokenizer xml pcntl
 RUN pecl channel-update pecl.php.net && pecl install memcached mcrypt-1.0.1 && docker-php-ext-enable memcached
 
@@ -85,5 +87,7 @@ RUN php -v | head -n 1 | grep -q "PHP ${PHP_VERSION}."
 # Final Touch
 #--------------------------------------------------------------------------
 #
+
+
 
 WORKDIR /etc/supervisor/conf.d/

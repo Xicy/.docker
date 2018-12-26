@@ -18,10 +18,13 @@ RUN apk update \
     && adduser -D -H -u 1000 -s /bin/bash www-data
 
 ARG PHP_UPSTREAM_CONTAINER=php-fpm
+ARG PHP_WEBSOCKET_CONTAINER=php-websocket
 ARG PHP_UPSTREAM_PORT=9000
+ARG PHP_WEBSOCKET_PORT=6001
 
 # Set upstream conf and remove the default conf
 RUN echo "upstream php-upstream { server ${PHP_UPSTREAM_CONTAINER}:${PHP_UPSTREAM_PORT}; }" > /etc/nginx/conf.d/upstream.conf \
+    && echo "upstream php-websocket { server ${PHP_WEBSOCKET_CONTAINER}:${PHP_WEBSOCKET_PORT}; }" > /etc/nginx/conf.d/websocket.conf \
     && rm /etc/nginx/conf.d/default.conf
 
 CMD ["nginx"]

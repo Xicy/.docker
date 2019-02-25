@@ -81,7 +81,7 @@ ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]
 #
 
 RUN php -v | head -n 1 | grep -q "PHP ${PHP_VERSION}."
-
+RUN usermod -u 1000 www-data
 #
 #--------------------------------------------------------------------------
 # Final Touch

@@ -13,7 +13,7 @@ docker run -d -p 80:80 -p 443:443 \
     --label com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy \
     jwilder/nginx-proxy:alpine
 
-docker exec nginx-proxy sh -c " { echo \"client_max_body_size 512m;\"; } > /etc/nginx/conf.d/client_max_body_size.conf"
+docker exec nginx-proxy sh -c " { echo \"client_max_body_size 512m;fastcgi_read_timeout 1h;proxy_read_timeout 1h;\"; } > /etc/nginx/conf.d/client_max_body_size.conf"
 #ssl for *.test domain
 docker exec nginx-proxy sh -c " { echo \"-----BEGIN CERTIFICATE-----\";\
 echo \"MIIC9TCCAd2gAwIBAgIJAJB9qHNwsrZYMA0GCSqGSIb3DQEBBQUAMBExDzANBgNV\";\

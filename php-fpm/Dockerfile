@@ -18,8 +18,12 @@ FROM laradock/php-fpm:2.2-${PHP_VERSION}
 
 LABEL maintainer="Mahmoud Zalt <mahmoud@zalt.me>"
 
+RUN echo "deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
+RUN sed -i '/deb http:\/\/deb.debian.org\/debian jessie-updates main/d' /etc/apt/sources.list
+
+
 # always run apt update when start and after add new source list, then clean up at end.
-RUN apt-get update -yqq && \
+RUN apt-get -o Acquire::Check-Valid-Until=false update -yqq && \
     pecl channel-update pecl.php.net
 
 #
@@ -454,7 +458,7 @@ RUN php -v | head -n 1 | grep -q "PHP ${PHP_VERSION}."
 # Final Touch
 #--------------------------------------------------------------------------
 #
-RUN apt-get install webp libwebp-dev && docker-php-ext-configure gd --with-webp-dir=/usr/lib --enable-gd-native-ttf --with-jpeg-dir=/usr/lib --with-freetype-dir=/usr/include/freetype2 && docker-php-ext-install gd
+#RUN apt-get install webp libwebp-dev && docker-php-ext-configure gd --with-webp-dir=/usr/lib --enable-gd-native-ttf --with-jpeg-dir=/usr/lib --with-freetype-dir=/usr/include/freetype2 && docker-php-ext-install gd
 
 COPY ./laravel.ini /usr/local/etc/php/conf.d
 COPY ./xlaravel.pool.conf /usr/local/etc/php-fpm.d/
